@@ -18,7 +18,7 @@ x_opt = 0; % TODO
 % parameter 
 maxiter = 500;
 check = 10;
-L = 1.5811; % TODO
+L = lambda/mu; % Lipschitz constant of f'
 
 % initialization
 x0 = 0.5;

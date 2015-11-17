@@ -14,7 +14,7 @@ function [seq_x,seq_f,seq_grad] = gd(x0,alphas,maxiter,check,lambda,mu)
   for iter=1:maxiter
   
     % TODO
-	grad = x_n / (x_n^2 + mu);
+	grad = lambda*x_n / (x_n^2 + mu);
 	x_np1 = x_n - alphas(iter)*grad;
 	f_np1 = 0.5*lambda*log(mu+x_np1^2);
 	%x(n+1) = x(n) -alpha*grad(f(x(n)))
