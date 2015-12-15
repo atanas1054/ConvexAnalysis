@@ -2,15 +2,20 @@ function [w,seq_TrainErrs,seq_TestErrs,seq_Objective] = SVM_nesterov(Xtrain,Ytra
 
 %add 1 to the last column of Xtrain (to get rid of b)
 Xtrain(:,size(Xtrain,2)+1) = 1;
-w_n = rand(size(Xtrain,2),1);
+Xtest(:,size(Xtest,2)+1) = 1;
+w_n = zeros(size(Xtrain,2),1);
 %get only the labels for the digit '0'
 Ytrain = Ytrain(:,1);
+Ytrain = (2*Ytrain/(max(Ytrain)))-1;
+Ytest = Ytest(:,1);
+Ytest = (2*Ytest/(max(Ytest)))-1;
 M = size(Xtrain,1);
 Objective = [];
 TrainErrs = [];
 TestErros = [];
 seq_Objective = [];
 seq_TrainErrs = [];
+seq_TestErrs = [];
 y_w_n = w_n;
 alpha_n = rand();
 
@@ -40,8 +45,11 @@ seq_Objective = [seq_Objective, Objective];
 fprintf(' iteration: %4d, Objective = %10f \n', iter, Objective);
 
 %calculate the trainerror by counting the missclassifications 
-TrainErr = sum(sign(Xtrain*w_n) ~= (2*Ytrain/(max(Ytrain)))-1)/ size(Ytrain,1);
+TrainErr = sum(sign(Xtrain*w_n) ~= Ytrain)/ size(Ytrain,1);
 seq_TrainErrs = [seq_TrainErrs,TrainErr];
+
+TestErr = sum(sign(Xtest*w_n) ~= Ytest) / size(Ytest,1);
+seq_TestErrs = [seq_TestErrs,TestErr];
 
 %stopping criteria
  if abs(Objective - prev_Objective) <0.001
@@ -50,7 +58,6 @@ seq_TrainErrs = [seq_TrainErrs,TrainErr];
 
 end
 
-seq_TestErrs = 0;
 w = w_n;
 
 end
