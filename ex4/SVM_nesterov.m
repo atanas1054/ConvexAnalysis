@@ -17,7 +17,7 @@ seq_Objective = [];
 seq_TrainErrs = [];
 seq_TestErrs = [];
 y_w_n = w_n;
-alpha_n = rand();
+alpha_n = 0.5;
 
 
 for iter=1:maxIter
